@@ -2,13 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import _ from 'lodash'
+import lodash from 'lodash'
 
 Vue.config.productionTip = false
-Object.defineProperty(Vue.prototype, '_', { value: _ });
+Vue.prototype._ = lodash
 
 /* eslint-disable no-new */
-new Vue({
+let app = new Vue({
     el: '#app',
     data: function() {
         return {
@@ -106,4 +106,5 @@ new Vue({
         console.log(this.name)
         console.log(this.$el)
     }
-})
+});
+window.app = app;

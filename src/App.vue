@@ -2,18 +2,23 @@
   <div id="app">
       <vue-tpl></vue-tpl>
       <computed-watch></computed-watch>
+      <class-style></class-style>
+      <conditional></conditional>
   </div>
 </template>
 
 <script>
 import VueTpl from './components/VueTpl'
 import ComputedWatch from './components/ComputedWatch'
-
+import ClassStyle from './components/ClassStyle'
+import Conditional from './components/Conditional'
 export default {
     name: 'App',
     components: {
         VueTpl,
-        ComputedWatch
+        ComputedWatch,
+        ClassStyle,
+        Conditional
     }
 }
 </script>

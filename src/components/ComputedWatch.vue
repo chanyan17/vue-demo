@@ -20,14 +20,20 @@ export default {
                 year = tmp_date.getFullYear(),
                 month = tmp_date.getMonth() + 1,
                 day = tmp_date.getDate();
-            console.log(_);
             return [year, '年', month, '月', day, '日'].join('');
         }
     },
     watch: {
         target: function(newValue, oldValue) {
-            console.log('旧值：' + oldValue);
-            console.log('当前的值：' + newValue);
+            this.debouncedValue();
+        }
+    },
+    created: function () {
+        this.debouncedValue = this._.debounce(this.getTarget, 500);
+    },
+    methods: {
+        getTarget: function() {
+            console.log(this.target);
         }
     }
 }
