@@ -3,9 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import lodash from 'lodash'
+import ToDoItem from './components/ToDoItem'
 
 Vue.config.productionTip = false
 Vue.prototype._ = lodash
+
+// 全局注册组件
+Vue.component('todo-item', ToDoItem);
 
 /* eslint-disable no-new */
 let app = new Vue({
