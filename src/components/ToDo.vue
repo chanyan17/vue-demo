@@ -6,6 +6,7 @@
             <button type="submit">Add</button>
         </form>
         <ul>
+            <!-- 组件中使用全局组件 -->
             <li
                 is="todo-item"
                 v-for="(todo, index) in todos"

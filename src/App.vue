@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-      <vue-tpl></vue-tpl>
-      <computed-watch></computed-watch>
-      <class-style></class-style>
-      <conditional></conditional>
-      <list></list>
-      <to-do></to-do>
-      <froms></froms>
+    <vue-tpl></vue-tpl>
+    <computed-watch></computed-watch>
+    <class-style></class-style>
+    <conditional></conditional>
+    <list></list>
+    <to-do></to-do>
+    <froms></froms>
   </div>
 </template>
 
