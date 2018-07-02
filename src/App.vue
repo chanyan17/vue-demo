@@ -12,7 +12,13 @@
         <span v-for="(item, index) in component_list" :key="index" @click="changeComponent(item)" style="padding: 0px 50px;">{{item}}</span>
     </div>
     <component v-bind:is="currentTabComponent"></component>
-    <props-demo title-text="props属性" check-tips="success"></props-demo></div>
+    <props-demo title-text="props属性" check-tips="success"></props-demo>
+    <base-checkbox v-model="lovingVue" @change="onChange">男</base-checkbox>
+    <base-native @click.native="doThis"></base-native>
+    <base-input v-on:input="onInput"></base-input>
+    <sync :show.sync="valueChild"></sync>
+    <button @click="changeValue">toggle</button>
+    </div>
 </template>
 
 <script>
@@ -28,6 +34,7 @@ import one from './components/one'
 import two from './components/two'
 import three from './components/three'
 import propsDemo from './components/propsDemo'
+import Sync from './components/Sync'
 export default {
     name: 'App',
     data: function() {
@@ -37,7 +44,9 @@ export default {
                 'two',
                 'three'
             ],
-            currentTabComponent: 'one'
+            currentTabComponent: 'one',
+            lovingVue: '',
+            valueChild: true
         }
     },
     // 局部注册组件
@@ -53,11 +62,24 @@ export default {
         one,
         two,
         three,
-        propsDemo
+        propsDemo,
+        Sync
     },
     methods: {
         changeComponent: function(item) {
             this.currentTabComponent = item;
+        },
+        onChange: function() {
+            console.log(arguments);
+        },
+        onInput: function(value) {
+            console.log(value);
+        },
+        doThis: function() {
+            console.log('Vue的给组件绑定原生事件');
+        },
+        changeValue(){
+            this.valueChild = !this.valueChild
         }
     }
 }
