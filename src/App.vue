@@ -18,6 +18,20 @@
     <base-input v-on:input="onInput"></base-input>
     <sync :show.sync="valueChild"></sync>
     <button @click="changeValue">toggle</button>
+    <slots-scope v-bind:todos="todos">
+        <template slot-scope="slotProps">
+            <!-- 为待办项自定义一个模板，-->
+            <!-- 通过 `slotProps` 定制每个待办项。-->
+            <span v-if="slotProps.todo.isComplete">✓</span>
+            {{ slotProps.todo.text }}
+        </template>
+    </slots-scope>
+    <div>
+        <span v-for="(item, index) in keep_alive_list" :key="index" @click="changeAliveComponent(item)" style="padding: 0px 50px;">{{item}}</span>
+    </div>
+    <keep-alive>
+        <component v-bind:is="currentAliveComponent"></component>
+    </keep-alive>
     </div>
 </template>
 
@@ -35,6 +49,8 @@ import two from './components/two'
 import three from './components/three'
 import propsDemo from './components/propsDemo'
 import Sync from './components/Sync'
+import SlotsScope from './components/SlotsScope'
+import Posts from './components/Posts'
 export default {
     name: 'App',
     data: function() {
@@ -46,7 +62,17 @@ export default {
             ],
             currentTabComponent: 'one',
             lovingVue: '',
-            valueChild: true
+            valueChild: true,
+            todos: [
+                {id: '1', text: 'doA', isComplete: true},
+                {id: '2', text: 'doB', isComplete: false},
+                {id: '3', text: 'doC', isComplete: true}
+            ],
+            keep_alive_list: [
+                'two',
+                'posts'
+            ],
+            currentAliveComponent: 'posts'
         }
     },
     // 局部注册组件
@@ -63,7 +89,9 @@ export default {
         two,
         three,
         propsDemo,
-        Sync
+        Sync,
+        SlotsScope,
+        Posts
     },
     methods: {
         changeComponent: function(item) {
@@ -80,7 +108,10 @@ export default {
         },
         changeValue(){
             this.valueChild = !this.valueChild
-        }
+        },
+        changeAliveComponent: function(item) {
+            this.currentAliveComponent = item;
+        },
     }
 }
 </script>
