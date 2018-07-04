@@ -32,6 +32,8 @@
     <keep-alive>
         <component v-bind:is="currentAliveComponent"></component>
     </keep-alive>
+    <four ref="childComponentData"></four>
+    <Map></Map>
     </div>
 </template>
 
@@ -51,6 +53,8 @@ import propsDemo from './components/propsDemo'
 import Sync from './components/Sync'
 import SlotsScope from './components/SlotsScope'
 import Posts from './components/Posts'
+import four from './components/four'
+import Map from './components/Map'
 export default {
     name: 'App',
     data: function() {
@@ -72,7 +76,8 @@ export default {
                 'two',
                 'posts'
             ],
-            currentAliveComponent: 'posts'
+            currentAliveComponent: 'posts',
+            four: 'parent component 的 four'
         }
     },
     // 局部注册组件
@@ -91,7 +96,9 @@ export default {
         propsDemo,
         Sync,
         SlotsScope,
-        Posts
+        Posts,
+        four,
+        Map
     },
     methods: {
         changeComponent: function(item) {
@@ -112,6 +119,9 @@ export default {
         changeAliveComponent: function(item) {
             this.currentAliveComponent = item;
         },
+    },
+    mounted: function() {
+        console.log(this.$refs.childComponentData.four);
     }
 }
 </script>

@@ -52,8 +52,12 @@ let app = new Vue({
     el: '#app',
     data: function() {
         return {
-            name: 'vue-demo'
+            name: 'vue-demo',
+            four: 'main.js 的 four'
         }
+    },
+    provide: {
+        test: '在父组件中通过provider来提供变量，然后在子组件中通过inject来注入变量。需要注意的是这里不论子组件有多深，只要调用了inject那么就可以注入provider中的数据。而不是局限于只能从当前父组件的prop属性来获取数据。'
     },
     components: { App },
     template: '<App/>',
