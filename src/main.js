@@ -7,6 +7,7 @@ import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import ToDoItem from './components/ToDoItem'
 import Components from './components/Components'
+import VueRouter from 'vue-router'
 
 Vue.config.productionTip = false
 Vue.prototype._ = lodash
@@ -102,10 +103,29 @@ requireFilter.keys().forEach(fileName => {
         filterConfig.default || filterConfig
     )
 })
-
+//0. 如果使用模块化机制编程，导入Vue和VueRouter，要调用 Vue.use(VueRouter)
+Vue.use(VueRouter)
+// 1. 定义 (路由) 组件。可以从其他文件 import 进来
+const Foo = { template: '<App/>', components: { App }}
+const Bar = { template: '<div>bar</div>' }
+// 2. 定义路由
+// 每个路由应该映射一个组件。 其中"component" 可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，只是一个组件配置对象。
+const routes = [
+    { path: '/foo', component: Foo },
+    { path: '/bar', component: Bar }
+  ]
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+const router = new VueRouter({
+    routes // (缩写) 相当于 routes: routes
+})
+// 4. 创建和挂载根实例。
 /* eslint-disable no-new */
 let app = new Vue({
     el: '#app',
+    router,
     data: function() {
         return {
             name: 'vue-demo',
@@ -115,8 +135,8 @@ let app = new Vue({
     provide: {
         test: '在父组件中通过provider来提供变量，然后在子组件中通过inject来注入变量。需要注意的是这里不论子组件有多深，只要调用了inject那么就可以注入provider中的数据。而不是局限于只能从当前父组件的prop属性来获取数据。'
     },
-    components: { App },
-    template: '<App/>',
+    //components: { App },
+    //template: '<App/>',
     beforeCreate: function () {
         // 在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用
         console.log('===== 创建前 =====')
