@@ -163,6 +163,12 @@ export default {
     color: #2c3e50;
     margin-top: 60px;
 }
+.bar {
+    width: 374px;
+    height: 374px;
+    background-color: blanchedalmond;
+    border: 1px solid #898989;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
