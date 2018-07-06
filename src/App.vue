@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <base-loading
+        :dot-color="dotColor" :dot-nums="dotNums" :loading-size="loadingSize" :dot-radius="dotRadius">
+    </base-loading>
     <vue-tpl></vue-tpl>
     <computed-watch></computed-watch>
     <class-style></class-style>
@@ -21,7 +24,7 @@
     <slots-scope v-bind:todos="todos">
         <template slot-scope="slotProps">
             <!-- 为待办项自定义一个模板，-->
-            <!-- 通过 `slotProps` 定制每个待办项。-->
+            <!-- 通过 'slotProps' 定制每个待办项。-->
             <span v-if="slotProps.todo.isComplete">✓</span>
             {{ slotProps.todo.text }}
         </template>
@@ -34,6 +37,20 @@
     </keep-alive>
     <four ref="childComponentData"></four>
     <Map></Map>
+    
+    <div v-on:click="isShow = !isShow">
+        toggle
+        <transition name="fade">
+            <span v-show="isShow">hello</span>
+        </transition>
+    </div>
+    <span>{{plus(1, 2)}}</span>
+    <input type="text" v-auto-focus>
+    <div>
+        <input type="text" v-model="filterData">
+        <div>{{ filterData | capitalize }}</div>
+    </div>
+    <render :level="6">Hello world!</render>
     </div>
 </template>
 
@@ -55,6 +72,9 @@ import SlotsScope from './components/SlotsScope'
 import Posts from './components/Posts'
 import four from './components/four'
 import Map from './components/Map'
+import {plus} from './assets/mixins/plus'
+import render from './components/render'
+
 export default {
     name: 'App',
     data: function() {
@@ -77,7 +97,13 @@ export default {
                 'posts'
             ],
             currentAliveComponent: 'posts',
-            four: 'parent component 的 four'
+            four: 'parent component 的 four',
+            loadingSize: 200,
+            dotRadius: 10,
+            dotColor: '#ff3366',
+            dotNums: 20,
+            isShow: true,
+            filterData: 'chen'
         }
     },
     // 局部注册组件
@@ -98,7 +124,8 @@ export default {
         SlotsScope,
         Posts,
         four,
-        Map
+        Map,
+        render
     },
     methods: {
         changeComponent: function(item) {
@@ -122,7 +149,8 @@ export default {
     },
     mounted: function() {
         console.log(this.$refs.childComponentData.four);
-    }
+    },
+    mixins: [plus]
 }
 </script>
 
@@ -134,5 +162,11 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

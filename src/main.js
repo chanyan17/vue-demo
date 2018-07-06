@@ -28,7 +28,7 @@ const requireComponent = require.context(
 requireComponent.keys().forEach(fileName => {
     // 获取组件配置
     const componentConfig = requireComponent(fileName)
-  
+
     // 获取组件的 PascalCase 命名
     const componentName = upperFirst(
       camelCase(
@@ -44,6 +44,62 @@ requireComponent.keys().forEach(fileName => {
       // 那么就会优先使用 `.default`，
       // 否则回退到使用模块的根。
       componentConfig.default || componentConfig
+    )
+})
+
+// 全局注册指令
+const requireDirective = require.context(
+    // 指令目录
+    './directives',
+    // 不查找子目录
+    false,
+    // js文件
+    /.+\.js$/
+)
+
+// 对每个配匹的文件
+requireDirective.keys().forEach(fileName => {
+    // 请求指令模块
+    const directiveConfig = requireDirective(fileName)
+
+    // 获取组件的 PascalCase 命名
+    const directiveName = fileName
+        // 移除开始的 './'
+        .replace(/^\.\//, '')
+        // 移除文件扩展
+        .replace(/\.\w+$/, '');
+    // 注册指令, 文件名作为指令名
+    Vue.directive(
+        directiveName,
+        directiveConfig.default || directiveConfig
+    )
+})
+
+// 全局注册过滤器
+const requireFilter = require.context(
+    // 指令目录
+    './filters',
+    // 不查找子目录
+    false,
+    // js文件
+    /.+\.js$/
+)
+
+// 对每个配匹的文件
+requireFilter.keys().forEach(fileName => {
+    // 请求指令模块
+    const filterConfig = requireFilter(fileName)
+
+    // 获取组件的 PascalCase 命名
+    const filterName = fileName
+        // 移除开始的 './'
+        .replace(/^\.\//, '')
+        // 移除文件扩展
+        .replace(/\.\w+$/, '');
+    // 注册指令, 文件名作为指令名
+    Vue.filter(
+        filterName,
+        filterConfig.default || filterConfig
     )
 })
 

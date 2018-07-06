@@ -11,9 +11,13 @@ const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
 
-const spinner = ora('building for production...')
+const spinner = ora({
+  color: 'green',
+  text: '正为生产环境打包，耐心点，不然自动关机。。。'
+})
 spinner.start()
 
+// 用来清除之前的打的包
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
@@ -31,8 +35,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       console.log(chalk.red('  Build failed with errors.\n'))
       process.exit(1)
     }
-
-    console.log(chalk.cyan('  Build complete.\n'))
+    console.log(chalk.blue.bgYellow.bold('  Build complete.\n'));
     console.log(chalk.yellow(
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'
